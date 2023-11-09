@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Coding Quiz</title>
+      <link rel="stylesheet" href="./assets/css/style.css" />
+      
+   </head>
+
+   <body>
+      <main>
+         <!-- <div class= id=> //*Header? -->
+            <nav class="nav">
+               <a >View High Scores</a>
+            </nav>
+            <div class="timer">
+               <p></p>
+            </div>
+         </div>
+         <div class="start-page" id="start-page">
+            <h1>Coding Quiz Challenge</h1>
+            <p>
+               Answer the following questions as best to your ability. Keep in mind wrong answers eliminates your time by 10 seconds! Good luck.
+            </p>
+            <button class="btn" type="submit" id="start-quiz">Start Quiz</button>
+         </div>
+
+         <div class="quizQuestions" id="quizQuestions">
+            <p id="question"></p>
+            <div class="answer-buttons" id="answer-buttons">
+               <button class="btn" id="btn-0"><span id="choice-0"></span></button>
+               <button class="btn" id="btn-1"><span id="choice-1"></span></button>
+               <button class="btn" id="btn-2"><span id="choice-2"></span></button>
+               <button class="btn" id="btn-3"><span id="choice-3"></span></button>
+            </div>
+            
+         </div>
+         <div class="all-done" id="all-done">
+            <h1>All Done!</h1>
+            <p>Your final score is: <span id="final-score"></span>.</p>
+           
+            
+         </div>
+         
+         </div>
+      </main>
+
+      <script src="./assets/js/script.js"></script>
+   </body>
+</html>
