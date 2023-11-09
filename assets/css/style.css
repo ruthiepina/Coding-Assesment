@@ -1,0 +1,28 @@
+/** General styling */
+:root {
+   --question-color: #purple;
+   --question-answer: #pink;
+   font-size: 62.5%; /** Defines default font size of 10px, 10/16=0.625 */
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+main {
+border: 1px black solid;
+
+}
+.header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+a {
+text-decoration: none;
+padding-left: 2rem;
+}
+
+.timer {
+    padding-right: 2rem;
+}
+
+
