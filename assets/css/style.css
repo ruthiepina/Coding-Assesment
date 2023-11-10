@@ -1,7 +1,7 @@
 /** General styling */
 :root {
    --question-color: #purple;
-   --question-answer: #pink;
+   --question-answer: #a92bc2;
    font-size: 62.5%; /** Defines default font size of 10px, 10/16=0.625 */
    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -12,6 +12,7 @@ main {
    margin-right: 15%;
 }
 
+/** Header */
 .header {
    display: flex;
    justify-content: space-between;
@@ -26,7 +27,9 @@ a {
 .timer {
    padding-right: 2rem;
 }
+/** End of header */
 
+/** Quiz intro */
 .start-quiz {
    display: flex;
    flex-direction: column;
@@ -40,12 +43,51 @@ a {
 
 .quiz-intro {
    font-size: 1.5rem;
-padding: 0 4rem;
+   padding: 0 4rem;
 }
 
 .all-btn {
-background-color: #6524a2;
-color: white;
-padding: .5rem 2rem;
-border-radius: 8px;
+   background-color: #6524a2;
+   color: white;
+   padding: 0.5rem 2rem;
+   border-radius: 8px;
 }
+/** End of quiz intro */
+
+/** Answer buttons */
+.question-container {
+   display: flex;
+   flex-direction: column;
+}
+
+.question-container p {
+   font-weight: bold;
+   font-size: 1.5rem;
+   margin: 2rem;
+}
+
+.answer-buttons {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+}
+
+.answer-buttons .btn {
+   padding: 2rem 2rem;
+   margin: 0.6rem 2rem;
+   width: 15rem;
+}
+
+.answer-buttons .btn:active {
+   background-color: var(--question-answer);
+}
+/** End of answer buttons */
+
+/** Correct/Wrong */
+.question-container .grade {
+   color: #6a6a94;
+   border-top: 0.3rem solid #6a6a94;
+   font-size: 1.2rem;
+}
+
+/** End of Correct/Wrong */
