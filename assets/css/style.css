@@ -91,11 +91,39 @@ a {
 .all-done-c {
    flex-direction: column;
    margin: 2rem;
-
 }
 /** Score submit btn */
 .score-submit:active {
    background-color: var(--question-answer);
 }
 /** End of all done */
+
+/** High Scores Page */
+.high-scores {
+   flex-direction: column;
+   margin: 2rem;
+}
+
+/** List of scores styling */
+.scores-list {
+   border-style: double;
+   background-color: #e2e2ff;
+}
+
+/** Listed items styling */
+.initials-score {
+   list-style-type: upper-roman;
+   color: black;
+}
+
+/** Go back btn */
+.go-back-btn:active {
+   background-color: var(--question-answer);
+}
+
+/** Clear high scores btn */
+.clear-btn:active {
+background-color: var(--question-answer);
+}
+/** End of High Score page */
 
