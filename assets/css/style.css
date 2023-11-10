@@ -14,7 +14,6 @@ main {
 
 /** Header */
 .header {
-   display: flex;
    justify-content: space-between;
    align-items: center;
 }
@@ -31,7 +30,6 @@ a {
 
 /** Quiz intro */
 .start-quiz {
-   display: flex;
    flex-direction: column;
    align-items: center;
 }
@@ -56,7 +54,6 @@ a {
 
 /** Answer buttons */
 .question-container {
-   display: flex;
    flex-direction: column;
 }
 
@@ -67,7 +64,6 @@ a {
 }
 
 .answer-buttons {
-   display: flex;
    flex-direction: column;
    align-items: flex-start;
 }
@@ -89,5 +85,17 @@ a {
    border-top: 0.3rem solid #6a6a94;
    font-size: 1.2rem;
 }
-
 /** End of Correct/Wrong */
+
+/** All Done */
+.all-done-c {
+   flex-direction: column;
+   margin: 2rem;
+
+}
+/** Score submit btn */
+.score-submit:active {
+   background-color: var(--question-answer);
+}
+/** End of all done */
+
