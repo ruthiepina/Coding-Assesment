@@ -11,41 +11,41 @@
    <body>
       <main>
          <!-- HEADER -->
-         <header class="view-hs">
+         <header class="header" id="header">
             <nav class="nav">
-               <a href="view-hs-link" class="view-hs-link">View High Scores</a>
+               <a href="view-hs-link" class="view-hs-link" hidden>View High Scores</a>
             </nav>
             <div class="timer">
-               <p class="time">Time:</p>
+               <p class="time" hidden>Time:</p>
             </div>
          </header>
          <!-- END OF HEADER -->
 
          <!-- Start of quiz. -->
          <section class="start-quiz" id="start-quiz">
-            <h1 class="heading" id="heading">Coding Quiz Challenge</h1>
-            <p class="quiz-heading" id="quiz-heading">
+            <h1 class="heading" id="heading" hidden>Coding Quiz Challenge</h1>
+            <p class="quiz-intro" id="quiz-intro" hidden>
                Answer the following questions to the best of your ability. Any wrong answers reduces your time by 10
-               seconds! Good luck.
+               seconds. Good luck!
             </p>
-            <button class="start-quiz-btn" type="submit" id="start-quiz-btn">Start Quiz</button>
+            <button class="start-quiz-btn all-btn" type="submit" id="start-quiz-btn" hidden>Start Quiz</button>
          </section>
          <!-- End of start of quiz. -->
 
          <!-- Quiz questions -->
          <section class="quiz-question" id="quiz-question">
             <div class="question-container">
-               <p class="question" id="question">
+               <p class="question" id="question" hidden>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat optio nostrum ullam quam nisi
-                  itaque?
+                  itaque? yada yada yada yada
                </p>
                <div class="answer-buttons" id="answer-buttons">
-                  <button class="btn" id="btn-0"><span id="choice-0"></span></button>
-                  <button class="btn" id="btn-1"><span id="choice-1"></span></button>
-                  <button class="btn" id="btn-2"><span id="choice-2"></span></button>
-                  <button class="btn" id="btn-3"><span id="choice-3"></span></button>
+                  <button class="all-btn btn" id="btn-0" hidden><span id="choice-0"></span>1. R</button>
+                  <button class="all-btn btn" id="btn-1" hidden><span id="choice-1"></span>2. R</button>
+                  <button class="all-btn btn" id="btn-2" hidden><span id="choice-2"></span>3. R</button>
+                  <button class="all-btn btn" id="btn-3" hidden><span id="choice-3"></span>4. R</button>
                </div>
-               <p class="grade">Correct!</p>
+               <p class="grade" hidden>Correct!</p>
             </div>
          </section>
          <!-- End of quiz questions -->
@@ -53,27 +53,31 @@
          <!-- All done -->
          <section class="all-done-c">
             <div class="all-done" id="all-done">
-               <h2 class="all-done-heading">All Done!</h2>
-               <p class="final-score" id="final-score">Your final score is: <span id="final-score-span"></span>.</p>
+               <h2 class="all-done-heading" hidden>All Done!</h2>
+               <p class="final-score" id="final-score" hidden>
+                  Your final score is: <span id="final-score-span"></span>.
+               </p>
             </div>
-            <label for="#initials">Enter your initials: </label>
-            <input type="text" class="initials" id="initials" />
-            <button type="submit" class="score-submit" id="score-submit">Submit</button>
+            <label for="initials" hidden>Enter your initials: </label>
+            <input type="text" class="initials" id="initials" hidden />
+            <button type="submit" class="score-submit all-btn" id="score-submit" hidden>Submit</button>
          </section>
          <!-- End of all done -->
 
          <!-- High scores -->
          <section class="high-scores" id="high-scores">
             <h2 class="high-scores-heading" id="high-scores-heading">High scores</h2>
-            <ul class="scores-list" id="scores-list">
+            <ol class="scores-list" id="scores-list">
                <li class="initials-score"></li>
-            </ul>
-            <button type="submit" class="go-back-btn" id="go-back-btn">Go back</button>
-            <button type="submit" class="clear-btn" id="clear-btn">Clear high scores</button>
+            </ol>
+            <div class="high-score-nav">
+               <button type="submit" class="go-back-btn all-btn" id="go-back-btn">Go back</button>
+               <button type="submit" class="clear-btn all-btn" id="clear-btn">Clear high scores</button>
+            </div>
          </section>
          <!-- End of high scores -->
       </main>
 
-      <script src="./assets/js/script.js"></script>
+      <script src="script.js"></script>
    </body>
 </html>
