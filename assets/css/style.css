@@ -14,6 +14,7 @@ main {
 
 /** Header */
 .header {
+   display: flex;
    justify-content: space-between;
    align-items: center;
 }
@@ -30,6 +31,7 @@ a {
 
 /** Quiz intro */
 .start-quiz {
+   display: flex;
    flex-direction: column;
    align-items: center;
 }
@@ -54,6 +56,7 @@ a {
 
 /** Answer buttons */
 .question-container {
+   display: flex;
    flex-direction: column;
 }
 
@@ -64,6 +67,7 @@ a {
 }
 
 .answer-buttons {
+   display: flex;
    flex-direction: column;
    align-items: flex-start;
 }
@@ -92,6 +96,7 @@ a {
    flex-direction: column;
    margin: 2rem;
 }
+
 /** Score submit btn */
 .score-submit:active {
    background-color: var(--question-answer);
@@ -100,8 +105,10 @@ a {
 
 /** High Scores Page */
 .high-scores {
+   display: flex;
    flex-direction: column;
-   margin: 2rem;
+   margin: 10rem;
+justify-content: flex-start;
 }
 
 /** List of scores styling */
@@ -116,6 +123,14 @@ a {
    color: black;
 }
 
+/** Container for high scores buttons */
+.high-score-nav {
+display: flex;
+padding: 0;
+margin-right: 3rem;
+
+}
+
 /** Go back btn */
 .go-back-btn:active {
    background-color: var(--question-answer);
@@ -123,7 +138,6 @@ a {
 
 /** Clear high scores btn */
 .clear-btn:active {
-background-color: var(--question-answer);
+   background-color: var(--question-answer);
 }
 /** End of High Score page */
-
