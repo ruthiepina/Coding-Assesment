@@ -1,7 +1,12 @@
+//* Makes intro section hidden or visible.
+function hideVisibleIntro(visibility) {
+   document.getElementById("heading").style.visibility = visibility;
+   document.getElementById("quiz-intro").style.visibility = visibility;
+   document.getElementById("start-quiz-btn").style.visibility = visibility;
+}
+
 function clearScreen() {
-   document.getElementById("heading").style.visibility = "hidden";
-   document.getElementById("quiz-intro").style.visibility = "hidden";
-   document.getElementById("start-quiz-btn").style.visibility = "hidden";
+   hideVisibleIntro("visible");
 
    document.getElementById("question").style.visibility = "hidden";
    document.getElementById("answer-buttons").style.visibility = "hidden";
@@ -21,6 +26,7 @@ function clearScreen() {
 
 // TODO Initialize/clear screen
 clearScreen();
+
 // TODO Display intro to quiz page
 // TODO  Process start quiz button - display quiz page
 // TODO Display quiz page until all questions are processed or timed out
