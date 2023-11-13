@@ -61,42 +61,42 @@ var questionSet = [
    },
 ];
 
-var quizIntroSection = null;
-var quizQuestionSection = null;
-var quizAllDoneSection = null;
-var quizHighScoresSection = null;
-var parent = document.getElementById("main");
+var quizIntroSectionEl = null;
+var quizQuestionSectionEl = null;
+var quizAllDoneSectionEl = null;
+var quizHighScoresSectionEl = null;
+var parentEl = document.getElementById("main");
 
 //* Makes High score section hidden or visible
 function hideShowHighScores(showHide) {
    if (showHide === "hide") {
-      quizHighScoresSection = parent.removeChild(document.getElementById("high-scores"));
+      quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
    } else {
-      parent.appendChild(quizHighScoresSection);
+      parentEl.appendChild(quizHighScoresSectionEl);
    }
 }
 //* Makes All Done section hidden or visible
 function hideShowAllDone(showHide) {
    if (showHide === "hide") {
-      quizAllDoneSection = parent.removeChild(document.getElementById("all-done-c"));
+      quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
    } else {
-      parent.appendChild(quizAllDoneSection);
+      parentEl.appendChild(quizAllDoneSectionEl);
    }
 }
 //* Makes question section hidden or visible
 function hideShowQuestions(showHide) {
    if (showHide === "hide") {
-      quizQuestionSection = parent.removeChild(document.getElementById("quiz-question"));
+      quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
    } else {
-      parent.appendChild(quizQuestionSection);
+      parentEl.appendChild(quizQuestionSectionEl);
    }
 }
 //* Makes intro section hidden or visible.
 function hideShowIntro(showHide) {
    if (showHide === "hide") {
-      quizIntroSection = parent.removeChild(document.getElementById("start-quiz"));
+      quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
    } else {
-      parent.appendChild(quizIntroSection);
+      parentEl.appendChild(quizIntroSectionEl);
    }
 }
 
