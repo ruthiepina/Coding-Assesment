@@ -75,7 +75,7 @@ a {
 .answer-buttons .btn {
    padding: 2rem 2rem;
    margin: 0.6rem 2rem;
-   width: 15rem;
+   width: auto;
 }
 
 .answer-buttons .btn:active {
