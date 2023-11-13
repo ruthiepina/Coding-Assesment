@@ -61,67 +61,85 @@ var questionSet = [
    },
 ];
 {
-var quizIntroSectionEl = null;
-var quizQuestionSectionEl = null;
-var quizAllDoneSectionEl = null;
-var quizHighScoresSectionEl = null;
-var parentEl = document.getElementById("main");
-}
-//* Makes High score section hidden or visible
-function hideShowHighScores(showHide) {
-   if (showHide === "hide") {
-      quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
-   } else {
-      parentEl.appendChild(quizHighScoresSectionEl);
+   var quizIntroSectionEl = null;
+   var quizQuestionSectionEl = null;
+   var quizAllDoneSectionEl = null;
+   var quizHighScoresSectionEl = null;
+   var parentEl = document.getElementById("main");
+
+   //* Makes High score section hidden or visible
+   function hideShowHighScores(showHide) {
+      if (showHide === "hide") {
+         quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
+      } else {
+         parentEl.appendChild(quizHighScoresSectionEl);
+      }
+   }
+   //* Makes All Done section hidden or visible
+   function hideShowAllDone(showHide) {
+      if (showHide === "hide") {
+         quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
+      } else {
+         parentEl.appendChild(quizAllDoneSectionEl);
+      }
+   }
+   //* Makes question section hidden or visible
+   function hideShowQuestions(showHide) {
+      if (showHide === "hide") {
+         quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
+      } else {
+         parentEl.appendChild(quizQuestionSectionEl);
+      }
+   }
+   //* Makes intro section hidden or visible.
+   function hideShowIntro(showHide) {
+      if (showHide === "hide") {
+         quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
+      } else {
+         parentEl.appendChild(quizIntroSectionEl);
+      }
+   }
+
+   function initializeQuizApp() {
+      hideShowIntro("hide");
+      hideShowQuestions("hide");
+      hideShowAllDone("hide");
+      hideShowHighScores("hide");
    }
 }
-//* Makes All Done section hidden or visible
-function hideShowAllDone(showHide) {
-   if (showHide === "hide") {
-      quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
-   } else {
-      parentEl.appendChild(quizAllDoneSectionEl);
-   }
-}
-//* Makes question section hidden or visible
-function hideShowQuestions(showHide) {
-   if (showHide === "hide") {
-      quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
-   } else {
-      parentEl.appendChild(quizQuestionSectionEl);
-   }
-}
-//* Makes intro section hidden or visible.
-function hideShowIntro(showHide) {
-   if (showHide === "hide") {
-      quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
-   } else {
-      parentEl.appendChild(quizIntroSectionEl);
-   }
-}
 
-function initializeQuizApp() {
-   hideShowIntro("hide");
-   hideShowQuestions("hide");
-   hideShowAllDone("hide");
-   hideShowHighScores("hide");
-}
+initializeQuizApp(); //* Initialize/clear screen
 
-// TODO Initialize/clear screen
-initializeQuizApp();
+hideShowIntro("show"); //* Displays intro page
 
-// TODO Display intro to quiz page
-hideShowIntro("show");
-
-// TODO  Process start quiz button - display quiz page
-
-
-
-//* Trying to create timer function for all pages
+//* Initialize timer variables and start quiz btn
 var timerEl = document.getElementById("countdown");
+var timeLeft = 100;
+var startQuizBtn = document.getElementById("start-quiz-btn");
+startQuizBtn.addEventListener("click", startQuiz);
 
+//* Process start quiz btn
+function startQuiz() {
+   hideShowIntro("hide");
+   hideShowQuestions("show");
+
+   for (var i = 0; i < questionSet.length; i++) {
+      displayQuestion(i);
+   }
+}
+
+function displayQuestion(questionIndex) {
+   //* Selects question field at element p
+   var questionEl = document.getElementById("question");
+   //* Selects object question at question index
+   var thisQuestion = questionSet[questionIndex];
+   questionEl.textContent = thisQuestion.question; //* Gives the question from question set array
+   //* Gets answers from question set array element and writes them to buttons
+   for (var i = 0; i < thisQuestion.answers.length; i++) {
+      document.getElementById("btn-" + i).textContent = thisQuestion.answers[i];
+   }
+}
 // todo move to button listener
-var timeLeft = 10;
 
 function myTimer() {
    if (timeLeft > 0) {
