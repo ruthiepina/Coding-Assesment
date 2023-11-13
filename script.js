@@ -60,13 +60,13 @@ var questionSet = [
       correctAnsIndex: 2,
    },
 ];
-
+{
 var quizIntroSectionEl = null;
 var quizQuestionSectionEl = null;
 var quizAllDoneSectionEl = null;
 var quizHighScoresSectionEl = null;
 var parentEl = document.getElementById("main");
-
+}
 //* Makes High score section hidden or visible
 function hideShowHighScores(showHide) {
    if (showHide === "hide") {
@@ -111,8 +111,29 @@ function initializeQuizApp() {
 initializeQuizApp();
 
 // TODO Display intro to quiz page
-hideShowIntro("show")
+hideShowIntro("show");
 
 // TODO  Process start quiz button - display quiz page
+
+
+
+//* Trying to create timer function for all pages
+var timerEl = document.getElementById("countdown");
+
+// todo move to button listener
+var timeLeft = 10;
+
+function myTimer() {
+   if (timeLeft > 0) {
+      //* As long as the 'timeLeft' is greater than 1
+      timerEl.textContent = timeLeft + " seconds remaining"; //* Set the 'textContent' of 'timerEl' to show remaining seconds
+      timeLeft--; //* Decrement 'timeLeft' by 1
+   } else {
+      timerEl.textContent = "0 seconds remaining"; //* Once 'timeLeft' gets to 0, set 'timerEl' to empty string
+      clearInterval(timeInterval); //* Use 'clearInterval()' to stop the timer
+   }
+}
+var timeInterval = setInterval(myTimer, 1000);
+
 // TODO Display quiz page until all questions are processed or timed out
 // TODO Display All Done screen
