@@ -66,46 +66,46 @@ var questionSet = [
    var quizAllDoneSectionEl = null;
    var quizHighScoresSectionEl = null;
    var parentEl = document.getElementById("main");
+}
 
-   //* Makes High score section hidden or visible
-   function hideShowHighScores(showHide) {
-      if (showHide === "hide") {
-         quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
-      } else {
-         parentEl.appendChild(quizHighScoresSectionEl);
-      }
+//* Makes High score section hidden or visible
+function hideShowHighScores(showHide) {
+   if (showHide === "hide") {
+      quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
+   } else {
+      parentEl.appendChild(quizHighScoresSectionEl);
    }
-   //* Makes All Done section hidden or visible
-   function hideShowAllDone(showHide) {
-      if (showHide === "hide") {
-         quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
-      } else {
-         parentEl.appendChild(quizAllDoneSectionEl);
-      }
+}
+//* Makes All Done section hidden or visible
+function hideShowAllDone(showHide) {
+   if (showHide === "hide") {
+      quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
+   } else {
+      parentEl.appendChild(quizAllDoneSectionEl);
    }
-   //* Makes question section hidden or visible
-   function hideShowQuestions(showHide) {
-      if (showHide === "hide") {
-         quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
-      } else {
-         parentEl.appendChild(quizQuestionSectionEl);
-      }
+}
+//* Makes question section hidden or visible
+function hideShowQuestions(showHide) {
+   if (showHide === "hide") {
+      quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
+   } else {
+      parentEl.appendChild(quizQuestionSectionEl);
    }
-   //* Makes intro section hidden or visible.
-   function hideShowIntro(showHide) {
-      if (showHide === "hide") {
-         quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
-      } else {
-         parentEl.appendChild(quizIntroSectionEl);
-      }
+}
+//* Makes intro section hidden or visible.
+function hideShowIntro(showHide) {
+   if (showHide === "hide") {
+      quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
+   } else {
+      parentEl.appendChild(quizIntroSectionEl);
    }
+}
 
-   function initializeQuizApp() {
-      hideShowIntro("hide");
-      hideShowQuestions("hide");
-      hideShowAllDone("hide");
-      hideShowHighScores("hide");
-   }
+function initializeQuizApp() {
+   hideShowIntro("hide");
+   hideShowQuestions("hide");
+   hideShowAllDone("hide");
+   hideShowHighScores("hide");
 }
 
 initializeQuizApp(); //* Initialize/clear screen
@@ -119,35 +119,45 @@ var startQuizBtn = document.getElementById("start-quiz-btn");
 startQuizBtn.addEventListener("click", startQuiz);
 
 var questionIndex = 0;
-var timeInterval = setInterval(myTimer, 1000);
+var timeInterval = null;
 
 //* Process start quiz btn
 function startQuiz() {
    hideShowIntro("hide");
    hideShowQuestions("show");
 
-   console.log(questionSet);
+   timeInterval = setInterval(myTimer, 1000);
 
    displayQuestion(questionIndex);
 
-   //* Gets parent element of answer buttons - "bubbling"
+   //* Gets parent element of answer buttons for the "bubbling"
    var questionAnswerEl = document.getElementById("answer-buttons");
    //* Adds event listener to parent element of answer buttons on click
    //* with event handler gradeQuestion
-   questionAnswerEl.addEventListener("click", gradeQuestion);
+   questionAnswerEl.addEventListener("click", processEachQuestion);
 }
+function processEachQuestion(evt) {
+   gradeQuestion(evt);
+   questionIndex++;
+   if (questionIndex < questionSet.length) {
+      displayQuestion(questionIndex);
+   } else {
+      hideShowQuestions("hide");
 
+      hideShowAllDone("show");
+   }
+}
 //* Grades question answer as correct or wrong
 function gradeQuestion(evt) {
    //* Gives us portion of the button element id that is an index to the button
    //* that was clicked on
    var answerId = evt.target.id; //* Gets the id of the child element that was clicked on - btn-x
    var answerIndex = answerId.substring(4, 5); //* Removes "btn-" and gets index (0-3) only
-   console.log(answerIndex, "  ", questionSet[questionIndex].correctAnsIndex);
    if (answerIndex === questionSet[questionIndex].correctAnsIndex) {
       document.getElementById("grade").textContent = "Correct!";
    } else {
       document.getElementById("grade").textContent = "Wrong...";
+      timeLeft -= 10; //* Time penalty for incorrect answer
    }
 }
 
@@ -166,12 +176,12 @@ function displayQuestion(questionIndex) {
 
 function myTimer() {
    if (timeLeft > 0) {
-      //* As long as the 'timeLeft' is greater than 1
-      timerEl.textContent = timeLeft + " seconds remaining"; //* Set the 'textContent' of 'timerEl' to show remaining seconds
       timeLeft--; //* Decrement 'timeLeft' by 1
+      timerEl.textContent = timeLeft + " seconds remaining"; //* Set the 'textContent' of 'timerEl' to show remaining seconds
    } else {
-      timerEl.textContent = "0 seconds remaining"; //* Once 'timeLeft' gets to 0, set 'timerEl' to empty string
       clearInterval(timeInterval); //* Use 'clearInterval()' to stop the timer
+      hideShowQuestions("hide"); //* Time runs out, hides questions
+      hideShowAllDone("show"); //* Time ran out, displays All Done page
    }
 }
 
