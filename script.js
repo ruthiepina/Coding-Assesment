@@ -66,6 +66,7 @@ var questionSet = [
    var quizAllDoneSectionEl = null;
    var quizHighScoresSectionEl = null;
    var parentEl = document.getElementById("main");
+   var finalScoreEl = document.getElementById("final-score-span");
 }
 
 //* Makes High score section hidden or visible
@@ -120,6 +121,7 @@ startQuizBtn.addEventListener("click", startQuiz);
 
 var questionIndex = 0;
 var timeInterval = null;
+var score = 0;
 
 //* Process start quiz btn
 function startQuiz() {
@@ -143,6 +145,10 @@ function processEachQuestion(evt) {
       displayQuestion(questionIndex);
    } else {
       hideShowQuestions("hide");
+      score = timeLeft;
+      clearInterval(timeInterval);
+      timerEl.textContent = score + " seconds remaining"; //* Set the 'textContent' of 'timerEl' to show remaining seconds
+      finalScoreEl.textContent = score;
 
       hideShowAllDone("show");
    }
@@ -173,7 +179,6 @@ function displayQuestion(questionIndex) {
    }
 }
 // todo move to button listener
-
 function myTimer() {
    if (timeLeft > 0) {
       timeLeft--; //* Decrement 'timeLeft' by 1
