@@ -68,6 +68,14 @@ var questionSet = [
    var parentEl = document.getElementById("main");
    var finalScoreEl = document.getElementById("final-score-span");
 }
+function mySortArray(a, b) {
+   return a.score - b.score;
+}
+function displayAllScores() {
+   console.log("🚀 ~ file: script.js:74 ~ displayAllScores ~ scoresArray:", scoresArray);
+   scoresArray.sort(mySortArray(a, b));
+   console.log("🚀 ~ file: script.js:74 ~ displayAllScores ~ scoresArray:", scoresArray);
+}
 
 //* Makes High score section hidden or visible
 function hideShowHighScores(showHide) {
@@ -75,6 +83,7 @@ function hideShowHighScores(showHide) {
       quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
    } else {
       parentEl.appendChild(quizHighScoresSectionEl);
+      displayAllScores();
    }
 }
 //* Makes All Done section hidden or visible
@@ -123,6 +132,8 @@ var questionIndex = 0;
 var timeInterval = null;
 var score = 0;
 
+var scoresArray = [];
+
 //* Process start quiz btn
 function startQuiz() {
    hideShowIntro("hide");
@@ -138,6 +149,7 @@ function startQuiz() {
    //* with event handler gradeQuestion
    questionAnswerEl.addEventListener("click", processEachQuestion);
 }
+
 function processEachQuestion(evt) {
    gradeQuestion(evt);
    questionIndex++;
@@ -145,14 +157,40 @@ function processEachQuestion(evt) {
       displayQuestion(questionIndex);
    } else {
       hideShowQuestions("hide");
+
       score = timeLeft;
       clearInterval(timeInterval);
       timerEl.textContent = score + " seconds remaining"; //* Set the 'textContent' of 'timerEl' to show remaining seconds
+
       finalScoreEl.textContent = score;
 
       hideShowAllDone("show");
+      initialsEl = document.getElementById("initials");
+      scoreSubmitEl = document.getElementById("score-submit");
+      scoreSubmitEl.addEventListener("click", submitScore);
    }
 }
+
+var initialsEl = null;
+
+var scoreSubmitEl = null;
+function submitScore() {
+   console.log("initialsEl.value ", initialsEl.value);
+   if (initialsEl.value.length === 0) {
+      alert("ERROR: Initials field cannot be left empty. Try again.");
+   } else {
+      var currentScore = {
+         initials: initialsEl.value,
+         score: score,
+      };
+      scoresArray.push(currentScore);
+
+      localStorage.setItem("allScores", JSON.stringify(scoresArray));
+      hideShowAllDone("hide");
+      hideShowHighScores("show");
+   }
+}
+
 //* Grades question answer as correct or wrong
 function gradeQuestion(evt) {
    //* Gives us portion of the button element id that is an index to the button
