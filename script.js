@@ -67,79 +67,45 @@ var questionSet = [
    var quizHighScoresSectionEl = null;
    var parentEl = document.getElementById("main");
    var finalScoreEl = document.getElementById("final-score-span");
-}
-function mySortArray(a, b) {
-   return a.score - b.score;
-}
-function displayAllScores() {
-   console.log("🚀 ~ file: script.js:74 ~ displayAllScores ~ scoresArray:", scoresArray);
-   scoresArray.sort(mySortArray(a, b));
-   console.log("🚀 ~ file: script.js:74 ~ displayAllScores ~ scoresArray:", scoresArray);
+
+   var initialsEl = null;
+   var scoreSubmitEl = null;
+
+   //* Initialize timer variables and start quiz btn
+   var timerEl = document.getElementById("countdown");
+   var timeLeft = 100;
+   var startQuizBtnEl = null;
+
+   var timeInterval = null;
+   var score = 0;
+
+   var scoresArray = [];
 }
 
-//* Makes High score section hidden or visible
-function hideShowHighScores(showHide) {
-   if (showHide === "hide") {
-      quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
-   } else {
-      parentEl.appendChild(quizHighScoresSectionEl);
-      displayAllScores();
-   }
-}
-//* Makes All Done section hidden or visible
-function hideShowAllDone(showHide) {
-   if (showHide === "hide") {
-      quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
-   } else {
-      parentEl.appendChild(quizAllDoneSectionEl);
-   }
-}
-//* Makes question section hidden or visible
-function hideShowQuestions(showHide) {
-   if (showHide === "hide") {
-      quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
-   } else {
-      parentEl.appendChild(quizQuestionSectionEl);
-   }
-}
-//* Makes intro section hidden or visible.
-function hideShowIntro(showHide) {
-   if (showHide === "hide") {
-      quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
-   } else {
-      parentEl.appendChild(quizIntroSectionEl);
-   }
-}
-
-function initializeQuizApp() {
-   hideShowIntro("hide");
-   hideShowQuestions("hide");
-   hideShowAllDone("hide");
-   hideShowHighScores("hide");
-}
+//********************* */
 
 initializeQuizApp(); //* Initialize/clear screen
-
-hideShowIntro("show"); //* Displays intro page
-
-//* Initialize timer variables and start quiz btn
-var timerEl = document.getElementById("countdown");
-var timeLeft = 100;
-var startQuizBtn = document.getElementById("start-quiz-btn");
-startQuizBtn.addEventListener("click", startQuiz);
-
+showIntro(); //* Displays intro page
+startQuizBtnEl = document.getElementById("start-quiz-btn");
 var questionIndex = 0;
-var timeInterval = null;
-var score = 0;
 
-var scoresArray = [];
+startQuizBtnEl.addEventListener("click", startQuiz);
+
+//********************* */
+
+function initializeQuizApp() {
+   hideIntro();
+   hideQuestions();
+   hideAllDone();
+   hideHighScores();
+}
 
 //* Process start quiz btn
 function startQuiz() {
-   hideShowIntro("hide");
-   hideShowQuestions("show");
+   hideIntro();
+   showQuestions();
 
-   timeInterval = setInterval(myTimer, 1000);
+   timeInterval = setInterval(myTimer, 1000); //* Starts timer
 
    displayQuestion(questionIndex);
 
@@ -150,44 +116,38 @@ function startQuiz() {
    questionAnswerEl.addEventListener("click", processEachQuestion);
 }
 
+function displayQuestion(questionIndex) {
+   //* Selects question field at element p
+   var questionEl = document.getElementById("question");
+   //* Selects object question at question index
+   var thisQuestion = questionSet[questionIndex];
+   questionEl.textContent = thisQuestion.question; //* Gives the question from question set array
+   //* Gets answers from question set array element and writes them to buttons
+   for (var i = 0; i < thisQuestion.answers.length; i++) {
+      document.getElementById("btn-" + i).textContent = thisQuestion.answers[i];
+   }
+}
+
 function processEachQuestion(evt) {
+   //* grades each question
    gradeQuestion(evt);
+
    questionIndex++;
    if (questionIndex < questionSet.length) {
       displayQuestion(questionIndex);
    } else {
-      hideShowQuestions("hide");
+      hideQuestions();
 
       score = timeLeft;
       clearInterval(timeInterval);
       timerEl.textContent = score + " seconds remaining"; //* Set the 'textContent' of 'timerEl' to show remaining seconds
-
       finalScoreEl.textContent = score;
 
-      hideShowAllDone("show");
+      showAllDone();
+
       initialsEl = document.getElementById("initials");
       scoreSubmitEl = document.getElementById("score-submit");
       scoreSubmitEl.addEventListener("click", submitScore);
-   }
-}
-
-var initialsEl = null;
-
-var scoreSubmitEl = null;
-function submitScore() {
-   console.log("initialsEl.value ", initialsEl.value);
-   if (initialsEl.value.length === 0) {
-      alert("ERROR: Initials field cannot be left empty. Try again.");
-   } else {
-      var currentScore = {
-         initials: initialsEl.value,
-         score: score,
-      };
-      scoresArray.push(currentScore);
-
-      localStorage.setItem("allScores", JSON.stringify(scoresArray));
-      hideShowAllDone("hide");
-      hideShowHighScores("show");
    }
 }
 
@@ -205,28 +165,81 @@ function gradeQuestion(evt) {
    }
 }
 
-function displayQuestion(questionIndex) {
-   //* Selects question field at element p
-   var questionEl = document.getElementById("question");
-   //* Selects object question at question index
-   var thisQuestion = questionSet[questionIndex];
-   questionEl.textContent = thisQuestion.question; //* Gives the question from question set array
-   //* Gets answers from question set array element and writes them to buttons
-   for (var i = 0; i < thisQuestion.answers.length; i++) {
-      document.getElementById("btn-" + i).textContent = thisQuestion.answers[i];
+function submitScore() {
+   if (initialsEl.value.length === 0) {
+      alert("ERROR: Initials field cannot be left empty. Try again.");
+   } else {
+      var currentScore = {
+         initials: initialsEl.value,
+         score: score,
+      };
+      scoresArray.push(currentScore);
+      console.log("scoresArray after push:", scoresArray);
+
+      localStorage.setItem("allScores", JSON.stringify(scoresArray));
+      hideAllDone();
+      showHighScores();
+      displayAllScores();
    }
 }
-// todo move to button listener
+
+function displayAllScores() {
+   console.log("scoresArray before sort:", scoresArray);
+   scoresArray.sort((a, b) => a.score - b.score);
+   console.log("scoresArray after sort:", scoresArray);
+   var scoresListEl = document.getElementById("scores-list");
+   for (var i = 0; i < scoresArray.length; i++) {
+      var scoreItem = scoresArray[i].initials + " - " + scoresArray[i].score;
+      const listItem = document.createElement("li");
+      listItem.textContent = scoreItem;
+      scoresListEl.appendChild(listItem);
+   }
+}
+
 function myTimer() {
    if (timeLeft > 0) {
       timeLeft--; //* Decrement 'timeLeft' by 1
       timerEl.textContent = timeLeft + " seconds remaining"; //* Set the 'textContent' of 'timerEl' to show remaining seconds
    } else {
       clearInterval(timeInterval); //* Use 'clearInterval()' to stop the timer
-      hideShowQuestions("hide"); //* Time runs out, hides questions
-      hideShowAllDone("show"); //* Time ran out, displays All Done page
+      hideQuestions(); //* Time runs out, hides questions
+      showAllDone(); //* Time ran out, displays All Done page
    }
 }
 
-// TODO Display quiz page until all questions are processed or timed out
-// TODO Display All Done screen
+//* Makes High score section hidden or visible
+function hideHighScores() {
+   quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
+   return;
+}
+function showHighScores() {
+   parentEl.appendChild(quizHighScoresSectionEl);
+   return;
+}
+//* Makes All Done section hidden or visible
+function hideAllDone() {
+   quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
+   return;
+}
+function showAllDone() {
+   parentEl.appendChild(quizAllDoneSectionEl);
+   return;
+}
+//* Makes question section hidden or visible
+function hideQuestions() {
+   quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
+   return;
+}
+function showQuestions() {
+   parentEl.appendChild(quizQuestionSectionEl);
+   return;
+}
+//* Makes intro section hidden or visible.
+function hideIntro() {
+   quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
+   return;
+}
+function showIntro() {
+   parentEl.appendChild(quizIntroSectionEl);
+   return;
+}
