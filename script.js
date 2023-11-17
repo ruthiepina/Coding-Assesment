@@ -61,10 +61,6 @@ var questionSet = [
    },
 ];
 {
-   var quizIntroSectionEl = null;
-   var quizQuestionSectionEl = null;
-   var quizAllDoneSectionEl = null;
-   var quizHighScoresSectionEl = null;
    var parentEl = document.getElementById("main");
    var finalScoreEl = document.getElementById("final-score-span");
 
@@ -75,20 +71,25 @@ var questionSet = [
    var timerEl = document.getElementById("countdown");
    var timeLeft = 100;
    var startQuizBtnEl = null;
-
    var timeInterval = null;
-   var score = 0;
 
+   var score = 0;
    var scoresArray = [];
+   var questionIndex = 0;
+
+   var questionAnswerEl = document.getElementById("answer-buttons");
+   var goBackBtnEl = document.getElementById("go-back-btn");
+   var quizHighScoresSectionEl = document.getElementById("high-scores");
+   var quizAllDoneSectionEl = document.getElementById("all-done-c");
+   var quizQuestionSectionEl = document.getElementById("quiz-question");
+   var quizIntroSectionEl = document.getElementById("start-quiz");
 }
 
 //********************* */
-
 initializeQuizApp(); //* Initialize/clear screen
 showIntro(); //* Displays intro page
-startQuizBtnEl = document.getElementById("start-quiz-btn");
-var questionIndex = 0;
 
+startQuizBtnEl = document.getElementById("start-quiz-btn");
 startQuizBtnEl.addEventListener("click", startQuiz);
 
 //********************* */
@@ -102,15 +103,17 @@ function initializeQuizApp() {
 
 //* Process start quiz btn
 function startQuiz() {
+   timeLeft = 100;
+   clearInterval(timeInterval);
+   timeInterval = setInterval(myTimer, 1000); //* Starts timer
+   questionIndex = 0;
    hideIntro();
    showQuestions();
-
-   timeInterval = setInterval(myTimer, 1000); //* Starts timer
 
    displayQuestion(questionIndex);
 
    //* Gets parent element of answer buttons for the "bubbling"
-   var questionAnswerEl = document.getElementById("answer-buttons");
+   questionAnswerEl = document.getElementById("answer-buttons");
    //* Adds event listener to parent element of answer buttons on click
    //* with event handler gradeQuestion
    questionAnswerEl.addEventListener("click", processEachQuestion);
@@ -146,11 +149,12 @@ function processEachQuestion(evt) {
       showAllDone();
 
       initialsEl = document.getElementById("initials");
+      initialsEl.value = "";
+
       scoreSubmitEl = document.getElementById("score-submit");
       scoreSubmitEl.addEventListener("click", submitScore);
    }
 }
-
 //* Grades question answer as correct or wrong
 function gradeQuestion(evt) {
    //* Gives us portion of the button element id that is an index to the button
@@ -174,7 +178,6 @@ function submitScore() {
          score: score,
       };
       scoresArray.push(currentScore);
-      console.log("scoresArray after push:", scoresArray);
 
       localStorage.setItem("allScores", JSON.stringify(scoresArray));
       hideAllDone();
@@ -184,16 +187,23 @@ function submitScore() {
 }
 
 function displayAllScores() {
-   console.log("scoresArray before sort:", scoresArray);
-   scoresArray.sort((a, b) => a.score - b.score);
-   console.log("scoresArray after sort:", scoresArray);
+   scoresArray.sort((a, b) => b.score - a.score);
    var scoresListEl = document.getElementById("scores-list");
+   while (scoresListEl.firstChild) {
+      scoresListEl.removeChild(scoresListEl.firstChild);
+   }
    for (var i = 0; i < scoresArray.length; i++) {
       var scoreItem = scoresArray[i].initials + " - " + scoresArray[i].score;
       const listItem = document.createElement("li");
       listItem.textContent = scoreItem;
       scoresListEl.appendChild(listItem);
    }
+   // quizHighScoresSectionEl = document.getElementById("high-scores");
+   goBackBtnEl = document.getElementById("go-back-btn");
+   goBackBtnEl.addEventListener("click", () => {
+      hideHighScores();
+      showIntro();
+   });
 }
 
 function myTimer() {
@@ -209,37 +219,37 @@ function myTimer() {
 
 //* Makes High score section hidden or visible
 function hideHighScores() {
-   quizHighScoresSectionEl = parentEl.removeChild(document.getElementById("high-scores"));
-   return;
+   // parentEl.removeChild(document.getElementById("high-scores"));
+   quizHighScoresSectionEl.style.display = "none";
 }
 function showHighScores() {
-   parentEl.appendChild(quizHighScoresSectionEl);
-   return;
+   // parentEl.appendChild(quizHighScoresSectionEl);
+   quizHighScoresSectionEl.style.display = "";
 }
 //* Makes All Done section hidden or visible
 function hideAllDone() {
-   quizAllDoneSectionEl = parentEl.removeChild(document.getElementById("all-done-c"));
-   return;
+   // parentEl.removeChild(document.getElementById("all-done-c"));
+   quizAllDoneSectionEl.style.display = "none";
 }
 function showAllDone() {
-   parentEl.appendChild(quizAllDoneSectionEl);
-   return;
+   // parentEl.appendChild(quizAllDoneSectionEl);
+   quizAllDoneSectionEl.style.display = "";
 }
 //* Makes question section hidden or visible
 function hideQuestions() {
-   quizQuestionSectionEl = parentEl.removeChild(document.getElementById("quiz-question"));
-   return;
+   // parentEl.removeChild(document.getElementById("quiz-question"));
+   quizQuestionSectionEl.style.display = "none";
 }
 function showQuestions() {
-   parentEl.appendChild(quizQuestionSectionEl);
-   return;
+   // parentEl.appendChild(quizQuestionSectionEl);
+   quizQuestionSectionEl.style.display = "";
 }
 //* Makes intro section hidden or visible.
 function hideIntro() {
-   quizIntroSectionEl = parentEl.removeChild(document.getElementById("start-quiz"));
-   return;
+   // parentEl.removeChild(document.getElementById("start-quiz"));
+   quizIntroSectionEl.style.display = "none";
 }
 function showIntro() {
-   parentEl.appendChild(quizIntroSectionEl);
-   return;
+   // parentEl.appendChild(quizIntroSectionEl);
+   quizIntroSectionEl.style.display = "";
 }
