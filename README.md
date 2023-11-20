@@ -47,7 +47,7 @@ and it is responsive to multiple screen sizes.
 
 ## Functionality
 
-The following animation demonstrates the application functionality: ![Coding Quiz](./assets/images/CodingQuiz.mp4)
+The following animation demonstrates the application functionality: ![Coding Quiz](assets/images/CodingQuiz.mp4)
 
 ## Access
 
